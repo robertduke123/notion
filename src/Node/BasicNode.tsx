@@ -1,4 +1,9 @@
-import { useEffect, useRef } from "react";
+import {
+	useEffect,
+	useRef,
+	type FormEventHandler,
+	type KeyboardEventHandler,
+} from "react";
 import type { NodeData } from "../utils/types";
 import styles from "./Node.module.css";
 
@@ -9,7 +14,7 @@ type BasicNodeProps = {
 	index: number;
 	addNode(node: NodeData, index: number): void;
 	removeNodeByIndex(index: number): void;
-	changeNodeByIndex(index: number, value: string): void;
+	changeNodeValue(index: number, value: string): void;
 };
 
 const BasicNode = ({
@@ -19,7 +24,7 @@ const BasicNode = ({
 	index,
 	addNode,
 	removeNodeByIndex,
-	changeNodeByIndex,
+	changeNodeValue,
 }: BasicNodeProps) => {
 	const nodeRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +42,29 @@ const BasicNode = ({
 		}
 	}, [node]);
 
-	return <div ref={nodeRef} contentEditable suppressContentEditableWarning />;
+	const handleInput: FormEventHandler<HTMLDivElement> = ({ currentTarget }) => {
+		const { textContent } = currentTarget;
+		changeNodeValue(index, textContent || "");
+	};
+
+	const handleClick = () => {
+		updateFocusedIndex(index);
+	};
+
+	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+		const { target } = event;
+	};
+
+	return (
+		<div
+			onInput={handleInput}
+			onClick={handleClick}
+			onKeyDown={onKeyDown}
+			ref={nodeRef}
+			contentEditable
+			suppressContentEditableWarning
+		/>
+	);
 };
 
 export default BasicNode;
