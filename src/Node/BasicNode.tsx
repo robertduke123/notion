@@ -51,7 +51,7 @@ const BasicNode = ({
 		updateFocusedIndex(index);
 	};
 
-	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (even) => {
 		const { target } = event;
 	};
 
