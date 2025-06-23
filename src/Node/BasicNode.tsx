@@ -52,7 +52,7 @@ const BasicNode = ({
 	};
 
 	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-		const { target } = event;
+		const { targe } = event;
 	};
 
 	return (
