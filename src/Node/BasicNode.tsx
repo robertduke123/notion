@@ -6,6 +6,7 @@ import {
 } from "react";
 import type { NodeData } from "../utils/types";
 import styles from "./Node.module.css";
+import { nanoid } from "nanoid";
 
 type BasicNodeProps = {
 	node: NodeData;
@@ -53,6 +54,14 @@ const BasicNode = ({
 
 	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
 		const { target } = event;
+		if (event.key == "Enter") {
+			event.preventDefault();
+			if (target.textContent?.[0] === "/") {
+				return;
+			}
+			addNode({ type: node.type, value: "", id: nanoid() }, index + 1);
+			updateFocusedIndex(index + 1);
+		}
 	};
 
 	return (
