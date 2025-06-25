@@ -5,7 +5,7 @@ import {
 	type KeyboardEventHandler,
 } from "react";
 import type { NodeData } from "../utils/types";
-import styles from "./Node.module.css";
+// import styles from "./Node.module.css";
 import { nanoid } from "nanoid";
 
 type BasicNodeProps = {
@@ -53,7 +53,7 @@ const BasicNode = ({
 	};
 
 	const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-		const { target } = event;
+		const target = event.target as HTMLDivElement;
 		if (event.key == "Enter") {
 			event.preventDefault();
 			if (target.textContent?.[0] === "/") {
@@ -61,6 +61,17 @@ const BasicNode = ({
 			}
 			addNode({ type: node.type, value: "", id: nanoid() }, index + 1);
 			updateFocusedIndex(index + 1);
+		}
+		if (event.key === "Backspace") {
+			if (target.textContent?.length === 0) {
+				event.preventDefault();
+				removeNodeByIndex(index);
+				updateFocusedIndex(index - 1);
+			} else if (window?.getSelection()?.anchorOffset === 0) {
+				event.preventDefault();
+				removeNodeByIndex(index - 1);
+				updateFocusedIndex(index - 2);
+			}
 		}
 	};
 
