@@ -5,8 +5,9 @@ import {
 	type KeyboardEventHandler,
 } from "react";
 import type { NodeData } from "../utils/types";
-// import styles from "./Node.module.css";
+import styles from "./Node.module.css";
 import { nanoid } from "nanoid";
+import cx from "classnames";
 
 type BasicNodeProps = {
 	node: NodeData;
@@ -83,6 +84,7 @@ const BasicNode = ({
 			ref={nodeRef}
 			contentEditable
 			suppressContentEditableWarning
+			className={cx(styles.node, styles[node.type])}
 		/>
 	);
 };
