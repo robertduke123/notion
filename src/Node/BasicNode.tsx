@@ -4,11 +4,12 @@ import {
 	type FormEventHandler,
 	type KeyboardEventHandler,
 } from "react";
-import type { NodeData } from "../utils/types";
+import type { NodeData, NodeType } from "../utils/types";
 import styles from "./Node.module.css";
 import { nanoid } from "nanoid";
 import { useAppState } from "../state/AppStateContext";
 import cx from "classnames";
+import { CommandPanel } from "./CommandPanel";
 
 type BasicNodeProps = {
 	node: NodeData;
@@ -24,7 +25,9 @@ const BasicNode = ({
 	index,
 }: BasicNodeProps) => {
 	const nodeRef = useRef<HTMLDivElement>(null);
-	const { changeNodeValue, removeNodeByIndex, addNode } = useAppState();
+	const showCommandPanel = isFocused && node?.value?.match(/^\//);
+	const { changeNodeValue, removeNodeByIndex, addNode, changeNodeType } =
+		useAppState();
 
 	useEffect(() => {
 		if (isFocused) {
@@ -39,6 +42,13 @@ const BasicNode = ({
 			nodeRef.current.textContent = node.value;
 		}
 	}, [node]);
+
+	const parseCommand = (nodeType: NodeType) => {
+		if (nodeRef.current) {
+			changeNodeType(index, nodeType);
+			nodeRef.current.textContent = "";
+		}
+	};
 
 	const handleInput: FormEventHandler<HTMLDivElement> = ({ currentTarget }) => {
 		const { textContent } = currentTarget;
@@ -73,15 +83,20 @@ const BasicNode = ({
 	};
 
 	return (
-		<div
-			onInput={handleInput}
-			onClick={handleClick}
-			onKeyDown={onKeyDown}
-			ref={nodeRef}
-			contentEditable
-			suppressContentEditableWarning
-			className={cx(styles.node, styles[node.type])}
-		/>
+		<>
+			{showCommandPanel && (
+				<CommandPanel selectItem={parseCommand} nodeText={node.value} />
+			)}
+			<div
+				onInput={handleInput}
+				onClick={handleClick}
+				onKeyDown={onKeyDown}
+				ref={nodeRef}
+				contentEditable
+				suppressContentEditableWarning
+				className={cx(styles.node, styles[node.type])}
+			/>
+		</>
 	);
 };
 
