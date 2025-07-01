@@ -7,6 +7,7 @@ import {
 import type { NodeData } from "../utils/types";
 import styles from "./Node.module.css";
 import { nanoid } from "nanoid";
+import { useAppState } from "../state/AppStateContext";
 import cx from "classnames";
 
 type BasicNodeProps = {
@@ -14,9 +15,6 @@ type BasicNodeProps = {
 	updateFocusedIndex(index: number): void;
 	isFocused: boolean;
 	index: number;
-	addNode(node: NodeData, index: number): void;
-	removeNodeByIndex(index: number): void;
-	changeNodeValue(index: number, value: string): void;
 };
 
 const BasicNode = ({
@@ -24,11 +22,9 @@ const BasicNode = ({
 	updateFocusedIndex,
 	isFocused,
 	index,
-	addNode,
-	removeNodeByIndex,
-	changeNodeValue,
 }: BasicNodeProps) => {
 	const nodeRef = useRef<HTMLDivElement>(null);
+	const { changeNodeValue, removeNodeByIndex, addNode } = useAppState();
 
 	useEffect(() => {
 		if (isFocused) {
