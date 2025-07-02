@@ -85,7 +85,7 @@ const BasicNode = ({
 	return (
 		<>
 			{showCommandPanel && (
-				<CommandPanel selectItem={parseCommand} nodeText={node.valu} />
+				<CommandPanel selectItem={parseCommand} nodeText={node.value} />
 			)}
 			<div
 				onInput={handleInput}
