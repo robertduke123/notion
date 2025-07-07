@@ -38,7 +38,7 @@ export const Page = () => {
 								node={node}
 								isFocused={focusedNodeIndex === index}
 								updateFocusedIndex={setFocusedNodeIndex}
-								index={index}
+								index={inde}
 							/>
 						))}
 					</SortableContext>
