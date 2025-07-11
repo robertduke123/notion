@@ -11,7 +11,6 @@ import {
 	SortableContext,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { log } from "console";
 
 export const Page = () => {
 	const { nodes, title, setTitle, addNode, reorderNodes } = useAppState();
@@ -23,7 +22,6 @@ export const Page = () => {
 		const { active, over } = event;
 		if (over?.id && over?.id !== active?.id) {
 			reorderNodes(active.id as string, over.id as string);
-			console.log(event);
 		}
 	};
 
