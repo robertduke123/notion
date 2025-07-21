@@ -46,7 +46,7 @@ export const Page = () => {
 				</DndContext>
 				<Spacer
 					handleClick={() => {
-						addNode({ type: "text", value: "", id: nanoid() }, nodes.lengt);
+						addNode({ type: "text", value: "", id: nanoid() }, nodes.length);
 					}}
 					showHint={!nodes.length}
 				/>
